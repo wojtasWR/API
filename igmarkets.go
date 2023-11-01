@@ -123,12 +123,13 @@ func (ig *IGMarkets) doRequestWithResponseHeaders(ctx context.Context, req *http
 	return igResponse, resp.Header, nil
 }
 
-func (ig *IGMarkets) ReadLiveStream(ctx context.Context, temp []*Stock, ticker_ig string, ticker string) {
+func (ig *IGMarkets) ReadLiveStream(ctx context.Context, temp *[]Stock, ticker_ig string, ticker string) {
 	for {
 		prices, error := ig.GetPrice(ctx, ticker_ig)
 		if error == nil {
 			temp_AAPL := Stock{Ticker: ticker, Price: prices, Date: time.DateOnly}
-			temp = append(temp, &temp_AAPL)
+			temp2 := append(*temp, temp_AAPL)
+			temp = &temp2
 		}
 		time.Sleep(time.Second)
 	}
