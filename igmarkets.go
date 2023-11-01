@@ -127,8 +127,8 @@ func (ig *IGMarkets) ReadLiveStream(ctx context.Context, temp []*Stock, ticker_i
 	for {
 		prices, error := ig.GetPrice(ctx, ticker_ig)
 		if error == nil {
-			temp_AAPL := &Stock{Ticker: ticker, Price: prices, Date: time.DateOnly}
-			temp = append(temp, temp_AAPL)
+			temp_AAPL := Stock{Ticker: ticker, Price: prices, Date: time.DateOnly}
+			temp = append(temp, &temp_AAPL)
 		}
 		time.Sleep(time.Second)
 	}
